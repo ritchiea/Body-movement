@@ -4,6 +4,7 @@ let poses = [];
 let connections;
 let balls = [];
 let score = 0;
+let targetBall = 0;
 
 // Ball class
 class Ball {
@@ -25,10 +26,11 @@ class Ball {
         for (let keypoint of pose.keypoints) {
           if (keypoint.confidence > 0.1) {
             let d = dist(keypoint.x, keypoint.y, this.x, this.y);
-            if (d < this.size / 2) {
+            if (d < this.size / 2 && Object.is(this, balls[targetBall])) {
               this.touched = true;
               this.color = color(0, 0, 255);
               score++;
+              targetBall++;
               break;
             }
           }
